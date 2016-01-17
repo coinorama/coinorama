@@ -1,0 +1,119 @@
+/*
+ * style.css
+ *
+ * This file is distributed as part of Coinorama
+ *
+ * Copyright (c) 2013-2016 Nicolas BENOIT
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+html, body { margin:0; padding:0; background:#151515; color:#dddddd; font-family:sans-serif; }
+
+a { color:#999; }
+a:hover { text-decoration:none; }
+a:visited { color:#777; }
+
+.topdiv {  vertical-align:middle; position:relative; top:50%; margin-top:-12px; }
+img.btn { vertical-align:middle; width:16px }
+
+#topbar { height:40px; margin:auto; clear:both; background:#e8a634; color:#000; }
+#logo { float:left; margin-top:4px; margin-left:4px; }
+#sections { float:left; margin:11px 2em; }
+.section_name { border-radius:0.3em; padding:0.19em; }
+.section_name a { color:#000; text-decoration:none; }
+.section_name a:hover { color:#000; text-decoration:none; }
+.section_name a:visited { color:#000; text-decoration:none; }
+#info_irl {  float:left; font-size:x-small; margin-top:14px; margin-left:2em; color:#333; }
+#info_irl a { color:#000; }
+#info_irl a:hover { color:#000; }
+#info_irl a:visited { color:#000; }
+
+/* side bar with tickers */
+#livebar { margin-left:1em; margin-right:1em; float:right; background:#1f1f1f; margin-top:12px; font-size:61%; color:#ddd; border:0px solid; border-radius:0.48em; }
+#info_live {  height:100%; margin:0 10px; margin-top:0.7em; line-height:1; }
+.info_live_sub { text-align:right; width:100%; clear:both; }
+.info_direction { font-size:130%; }
+
+/* generic windows */
+.win { display:none; color:#000; z-index:1; position:absolute; top:0; left:0; border:0px solid; font-size:smaller; border-radius:0.3em; box-shadow:1px 1px 12px #555; background-color:#fff; opacity:0.97; }
+.winbar { width:100%; padding-top:4px; padding-bottom:4px; background:#e8a634; white-space:nowrap; border-top-left-radius:4px; border-top-right-radius:4px; }
+.winbar_title { padding-left:4px; font-size:110%; float:left; }
+.winbar_ctrl { font-family:Monospace, Courier; float:left; padding-left:12px; padding-right:4px; float:right; }
+.winclosebtn { font-size:smaller; float:right; text-align:right; position:relative; padding:1%;}
+a.winctrl { color:#000; text-decoration:none; border:2px solid; border-radius:0.3em; }
+a.winctrl:visited { color:#000; text-decoration:none; }
+a.winctrl:hover { background-color:#ddd; }
+a.winlink { color:#000; }
+a.winlink:visited { color:#000; }
+a.winlink:hover { background-color:#ddd; }
+
+/* charts */
+.legendLabel { color:#949494; }
+.legendLabel a { color:#fff; }
+#flotTip { position:absolute; display:none; border:1px solid; padding:3px; color:#000; font-size:9px; border-radius:0.3em; background-color:#fff; opacity:0.9; }
+
+/* section bar */
+.section_bar { float:left; width:98%; text-align:center; background:#1f1f1f; font-size:80%; margin:1%; }
+.ctrl_table { margin-left:0.4em; margin-right:0.9em; border-collapse:collapse; }
+.ctrl_table td { border:0px; padding-top:0em; padding-left:0.4em; padding-right:0.4em; white-space:nowrap; }
+.ctrl_item { float:left; margin:0 0; font-size:x-small; }
+.ctrl_last { float:left; margin:0.42em 1em; font-size:x-small; }
+
+.cbox { background:#000; font-size:xx-small; color:#fff; border:1px solid #555; border-radius:0.3em; padding:0.1em; margin:0.1em; }
+
+/* markets */
+#markets_page { overflow:hidden; margin:12px; background:#1f1f1f; border-radius:0.3em; }
+#markets_lpanel { float:left; width:73%; }
+#markets_rpanel { float:left; width:27%; }
+.lvsep { width:96%; background:#000; margin-left:1em; margin-bottom:1em; padding:0.8em; font-size:xx-small; color:#fff; border-radius:0.3em; }
+.rvsep { width:93%; background:#000; margin-right:1em; margin-bottom:1em; padding:0.8em; font-size:xx-small; color:#fff; border-radius:0.3em; float:left; }
+.markets_chart { width:99%; background:#000; font-size:small; }
+
+
+/* network */
+#network_page { overflow:hidden; margin:12px; background:#1f1f1f; border-radius:0.3em; }
+#network_lpanel { float:left; width:50%; }
+#network_rpanel { float:left; width:50%; }
+.network_chart { width:99%; background:#000; font-size:small; }
+
+/* blockchain */
+#chain_page { overflow:hidden; margin:12px; background:#1f1f1f; border-radius:0.3em; }
+.chain_txs_table { margin-left:1em; margin-right:2em; width:95%; border-collapse:collapse; border:2px solid #777; }
+.chain_txs_table td { border:thin solid #777; padding:0.3em; white-space:nowrap; }
+.chain_bks_table { margin-left:2.5%; margin-top:1%; margin-right:5%; border-collapse:collapse; border:2px solid #777; }
+.chain_bks_table td { border:thin solid #777; padding:0.3em; padding-left:1em; padding-right:1em; text-align:center; white-space:nowrap; }
+a.bkslink { color:#ddd; }
+a.bkslink:visited { color:#ddd; }
+a.bkslink:hover { background-color:#555; }
+
+.winbc { display:none; color:#000; z-index:1; position:absolute; top:0; left:0; font-size:smaller; border:0px solid; border-radius:0.3em; box-shadow:1px 1px 12px #555; background-color:#fff; opacity:0.97; }
+.winbc_ctnt { margin-left:2.5%; margin-right:2.5%; white-space:nowrap; width:95%; font-size:95%; }
+.winbc_head { font-size:110%; font-weight:bold; white-space:nowrap; }
+.winbc_inctnt { margin-left:1em; margin-right:1em; white-space:nowrap; width:95%; max-height:400px; overflow-y:auto; font-size:95%; }
+.ulbc { margin-left:0px; padding-left:10px; list-style-type:none; }
+
+/* blocks */
+#blocks_page { overflow:hidden; margin:12px; background:#1f1f1f; border-radius:0.3em; font-size:small; }
+.blocks_table { margin-left:2.5%; margin-top:1%; margin-right:5%; border-collapse:collapse; border:2px solid #777; }
+.blocks_table td { border:thin solid #777; padding:0.3em; padding-left:1em; padding-right:1em; text-align:center; white-space:nowrap; }
+
+/* api */
+#api_page { overflow:hidden; margin:12px; background:#1f1f1f; border-radius:0.3em; font-size:small; }
+.api_table { margin-left:2.5%; margin-top:1%; margin-right:5%; border-collapse:collapse; border:1px solid #777; }
+.api_table td { border:thin solid #777; padding:0.3em; padding-left:1em; padding-right:1em; text-align:center; white-space:nowrap; }
+
+
+/* footer */
+#footer { width:100%; clear:both; margin:4px 0px auto; color:#444; margin-top:20px; text-align:center; font-size:x-small; }

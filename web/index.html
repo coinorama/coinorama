@@ -1,0 +1,287 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:svg="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <meta name="keywords" content="bitcoin,chart,blockchain" />
+  <meta name="description" content="Coinorama monitors Bitcoin markets, network and blockchain." />
+  <link href="/coinorama/style.css" rel="stylesheet" type="text/css" media="screen" />
+  <link href="/coinorama/static/jquery-ui.css" rel="stylesheet" type="text/css" />
+  <link rel="icon" type="image/png" href="/coinorama/static/favicon.png" />
+  <title>Coinorama</title>
+  <script language="javascript" type="text/javascript" src="/coinorama/static/jquery.js"></script>
+  <script language="javascript" type="text/javascript" src="/coinorama/static/jquery-ui.js"></script>
+  <script language="javascript" type="text/javascript" src="/coinorama/static/jquery.color.js"></script>
+  <script language="javascript" type="text/javascript" src="/coinorama/static/jquery.flot.js"></script>
+  <script language="javascript" type="text/javascript" src="/coinorama/static/jquery.flot.tooltip.js"></script>
+  <script language="javascript" type="text/javascript" src="/coinorama/static/jquery.flot.time.js"></script>
+  <script language="javascript" type="text/javascript" src="/coinorama/static/jquery.flot.stack.js"></script>
+  <script language="javascript" type="text/javascript" src="/coinorama/static/jquery.flot.fillarea.js"></script>
+  <script language="javascript" type="text/javascript" src="/coinorama/static/jquery.flot.canvas.js"></script>
+  <script language="javascript" type="text/javascript" src="/coinorama/static/jquery.flot.candlesticks.js"></script>
+  <script language="javascript" type="text/javascript" src="/coinorama/static/jquery.flot.fillbelow.js"></script>
+  <script language="javascript" type="text/javascript" src="/coinorama/coinorama.js"></script>
+  <script language="javascript" type="text/javascript" src="/coinorama/coinorama.ui.js"></script>
+  <script language="javascript" type="text/javascript" src="/coinorama/coinorama.markets.js"></script>
+  <script language="javascript" type="text/javascript" src="/coinorama/coinorama.markets.alerts.js"></script>
+  <script language="javascript" type="text/javascript" src="/coinorama/coinorama.network.js"></script>
+  <script language="javascript" type="text/javascript" src="/coinorama/coinorama.blocks.js"></script>
+</head>
+<body>
+
+  <div class="win" id="about">
+    <div class="winbar" id="winbar_about">
+      <span class="winbar_title">Coinorama - About</span><span class="winbar_ctrl"><a id="ct_about" class="winctrl" href="#">x</a></span><br />
+    </div><br />
+    <div style="margin-left:2.5%; margin-right:2.5%;">
+    Coinorama is an independant, free-of-charge monitor of Bitcoin markets, network and blockchain.<br />
+    It's been active since May 2013 and released under GNU Affero GPL v3 in 2016.<br /><br />
+    <div style="display:inline-block;">
+      You're welcome to share comments and bug reports on <a class="winlink" target="_blank" href="https://bitcointalk.org/index.php?topic=216861.0">bitcointalk</a>
+      and <a class="winlink" href="https://twitter.com/Coinorama_net" target="_blank">twitter</a>.<br/>
+      Any other inquiry can be sent to coinorama.net{at}gmail.com<br/>&nbsp;<br/>
+      And if you dig Coinorama, please consider making a <a class="winlink" href="bitcoin:15At8pPhcoQySMmytGiANYLxFzr3vcKFRF">donation</a>.<br /><br />
+      Thanks for your support !<br/><br/>
+    </div>
+    <div  style="display:inline-block;">
+      &nbsp;<img src="/coinorama/static/donation-qrcode.png" />
+    </div>
+    <br/>
+    <br />
+    </div>
+    <div class="winclosebtn"><a id="ct_about" class="winctrl" href="#">&nbsp;Close&nbsp;</a></div>
+  </div>
+
+  <!-- Sections -->
+  <div id="topbar">
+    <div id="logo">
+      <span style="float:left;"><a href="/coinorama"><img src="/coinorama/static/logo2.png" alt="coinorama" /></a></span>
+      <span style="font-size:xx-small; color:#986614; margin-left:2px; margin-top:18px; line-height:1em; float:left;">.net</span>
+    </div>
+    <div id="sections">
+      <span id="markets_ct" class="section_name"><a href="/coinorama/markets">MARKETS</a></span> &nbsp;
+      <span id="network_ct" class="section_name"><a href="/coinorama/network">NETWORK</a></span> &nbsp;
+      <span id="blocks_ct" class="section_name"><a href="/coinorama/blocks">BLOCKS</a></span> &nbsp;
+      <span id="about_ct" class="section_name"><a id="ct_about" href="#">ABOUT</a></span> &nbsp;
+      <!-- <span id="api_ct" class="section_name"><a href="/coinorama/api">API</a></span> &nbsp; -->
+      <!-- <span id="webapp_ct" class="section_name"><a href="/coinorama/webapp.html">WEB-APP</a></span> -->
+    </div>
+    <div id="info_irl">
+      <div style="float:left;">
+        <a style="text-decoration:none" href="https://twitter.com/Coinorama_net" target="_blank">
+          <img src="/coinorama/static/twitter.png" alt="twitter" />
+        </a>
+      </div>
+      <div style="float:left; margin-left:1.2em; margin-top:-3px;">
+        <a style="text-decoration:none" href="https://github.com/coinorama" target="_blank">
+          <img src="/coinorama/static/github.png" alt="github" />
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Ticker -->
+  <div id="livebar">
+  </div>
+
+  <!-- Markets -->
+  <div id="markets_page">
+    <div id="markets_bar" class="section_bar">
+      <div class="ctrl_item">
+        <table class="ctrl_table">
+          <tr style="color:#bbb; background:#333; font-size:xx-small;"><td colspan="2">MODE</td></tr>
+          <tr>
+            <td><a id="mode_single" href="#">single</a></td>
+            <td><a id="mode_multi" href="#">multiple</a></td>
+          </tr>
+        </table>
+      </div>
+      <div id="markets_periods" class="ctrl_item"></div>
+      <div class="ctrl_last">
+        <span>| &nbsp;
+          <a id="ct_markets_alerts" href="#">ALERTS</a> &nbsp; | &nbsp;
+          <a id="ct_markets_help" href="#">HELP</a> &nbsp; | &nbsp;
+          colors:&nbsp;
+          classic<a id="toggle_theme_classic" href="#"><img class="btn" id="btn_theme_classic" alt="disable" src="/coinorama/static/btn-toggle-enabled.png" /></a>
+          thematic<a id="toggle_theme_perchart" href="#"><img class="btn" id="btn_theme_perchart" alt="enable" src="/coinorama/static/btn-toggle-disabled.png" /></a>
+          &nbsp; | &nbsp;
+          y-axis:&nbsp;
+          left<a id="toggle_yaxis_left" href="#"><img class="btn" id="btn_yaxis_left" alt="disable" src="/coinorama/static/btn-toggle-disabled.png" /></a>
+          right<a id="toggle_yaxis_right" href="#"><img class="btn" id="btn_yaxis_right" alt="enable" src="/coinorama/static/btn-toggle-enabled.png" /></a>
+          &nbsp; | &nbsp;
+          thumbs: <a id="toggle_right_pane" href="#"><img class="btn" id="btn_right_pane" src="/coinorama/static/btn-enabled.png" alt="off"></img></a>
+        </span>
+      </div>
+      <br style="clear:both" /><br/>
+    </div>
+    <div id="markets_lpanel">
+      <div class="lvsep" id="ml1"></div>
+      <div class="lvsep" id="ml2"></div>
+      <div class="lvsep" id="ml3"></div>
+    </div>
+    <div id="markets_rpanel">
+      <div class="rvsep" id="mr1"></div>
+      <div class="rvsep" id="mr2"></div>
+      <div class="rvsep" id="mr3"></div>
+    </div>
+  </div>
+
+  <div class="win" id="markets_help">
+    <div class="winbar" id="winbar_markets_help">
+      <span class="winbar_title">Markets - Help</span><span class="winbar_ctrl"><a id="ct_markets_help" class="winctrl" href="#">x</a></span><br />
+    </div><br />
+    <div style="margin-left:2.5%; margin-right:2.5%;">
+    You may display individual or multiple exchanges data.<br />If selected exchanges use different currencies, data are converted to USD.<br/><br/>
+    Each chart box can be customized, and you may select among the following chart types :
+    <ul>
+      <li>Price</li>
+      <li>Price relative to one of the exchanges [multi/average modes]</li>
+      <li>Price Min/Avg/Max [multi/average modes]</li><br/>
+      <li>MACD (<a class="winlink" href="http://en.wikipedia.org/wiki/MACD" target="_blank">Moving Average Convergence Divergence</a>) [single mode]</li>
+      <li>ADX (<a class="winlink" href="http://en.wikipedia.org/wiki/Average_directional_movement_index" target="_blank">Average Directional Movement Index</a>) [single mode]</li>
+      <li>RSI (<a class="winlink" href="http://en.wikipedia.org/wiki/Relative_strength_index" target="_blank">Relative Strength Index</a>)</li>
+      <li>TSI (<a class="winlink" href="http://en.wikipedia.org/wiki/True_strength_index" target="_blank">True Strength Index</a>)</li>
+      <li>Volatility (<a class="winlink" href="http://en.wikipedia.org/wiki/Standard_deviation" target="_blank">Standard Deviation</a>) [single mode]</li>
+      <li>ATR (<a class="winlink" href="http://en.wikipedia.org/wiki/Average_true_range" target="_blank">Average True Range</a>)</li><br/>
+      <li>Trades volumes</li>
+      <li>Trades volumes share of each exchange [multi/average modes]</li>
+      <li>Number of trades</li>
+      <li>Average trade size</li><br/>
+      <li>Bids/Asks ratio (e.g. demand vs. offer)</li>
+      <li>Bids & Asks sums</li>
+      <li>Order book</li>
+      <li>Order book spread (highlights gaps between asks and bids)</li><br/>
+      <li>Lag of trading engine and network</li>
+    </ul>
+    The ticker on the right shows for each exchange :
+    <ul>
+      <li>Average price direction</li>
+      <li>Current price</li>
+      <li>Average market share (past+current day)</li>
+    </ul>
+    Data are updated every 3 seconds.<br />
+    </div>
+    <div class="winclosebtn"><a id="ct_markets_help" class="winctrl" href="#">&nbsp;Close&nbsp;</a></div>
+  </div>
+
+  <!-- Network -->
+  <div id="network_page">
+    <div id="network_bar" class="section_bar">
+      <div id="network_periods" class="ctrl_item"></div>
+      <div class="ctrl_last">
+        | &nbsp; <a id="ct_network_help" href="#">HELP</a>
+        &nbsp; | &nbsp;
+        y-axis:&nbsp;
+          left<a id="toggle_yaxis_left" href="#"><img class="btn" id="btn_yaxis_left" alt="disable" src="/coinorama/static/btn-toggle-disabled.png" /></a>
+          right<a id="toggle_yaxis_right" href="#"><img class="btn" id="btn_yaxis_right" alt="enable" src="/coinorama/static/btn-toggle-enabled.png" /></a>
+      </div>
+    </div>
+    <div id="network_lpanel">
+      <div class="lvsep" id="nl1"></div>
+      <div class="lvsep" id="nl2"></div>
+      <div class="lvsep" id="nl3"></div>
+    </div>
+    <div id="network_rpanel">
+      <div class="rvsep" id="nr1"></div>
+      <div class="rvsep" id="nr2"></div>
+      <div class="rvsep" id="nr3"></div>
+    </div>
+  </div>
+
+  <div class="win" id="network_help">
+    <div class="winbar" id="winbar_network_help">
+      <span class="winbar_title">Network - Help</span><span class="winbar_ctrl"><a id="ct_network_help" class="winctrl" href="#">x</a></span><br />
+    </div><br />
+    <div style="margin-left:2.5%; margin-right:2.5%;">
+    This section shows some statistics about the Bitcoin network :
+    <ul>
+      <li>Hashrate estimation vs. Difficulty</li>
+      <li>Number of blocks</li>
+      <li>Interval between blocks</li>
+      <li>Number of minted coins</li>
+      <li>Number of confirmed transactions</li>
+      <li>Transactions rate</li>
+      <li>BTC volume of confirmed transactions</li>
+      <li>Average BTC volume per transaction</li>
+      <li>Size of blocks</li>
+      <li>Average transaction size</li>
+    </ul>
+    Data are updated every 30 seconds.<br />
+    </div>
+    <div class="winclosebtn"><a id="ct_network_help" class="winctrl" href="#">&nbsp;Close&nbsp;</a></div>
+  </div>
+
+
+  <!-- Blocks -->
+  <div id="blocks_page">
+    <div style="font-size:90%; margin-left:1em; margin-bottom:1em;"><br /><br />
+      <h2>Latest Blocks</h2>
+      <div style="font-size:90%; margin-left:1em; margin-top:2em; margin-bottom:1em;"><br />
+        <div id="blocks_last"></div>
+      </div>
+    </div>
+    <br />
+  </div>
+  <ul style="position:absolute; z-index:100; display:none; font-size:80%" id="menu"></ul>
+
+
+  <!-- API -->
+  <div id="api_page">
+    <div style="font-size:90%; margin-left:1em; margin-bottom:1em;"><br /><br />
+      <h2>Coinorama API</h2>
+      Coinorama's ticker data are public and can be accessed using the API described on this page.<br/><br/>
+      An implementation example is provided with this simple Python ticker: <a href="/coinorama-ticker.py" target="_blank">coinorama-ticker.py</a>
+      (<a href="https://github.com/coinorama/coinorama-api" target="_blank">GitHub</a>).
+      <h3>Markets Ticker</h3>
+      <div style="margin-left:1em;">
+        URL : <a href="/api/markets" target="_blank">http://coinorama.net/api/markets</a><br/>
+        Recommended request rate : Ten per minute<br/><br/>
+        Returns a JSON object where <i>"ticks"</i> holds the data of available exchanges.<br/>
+        Each exchange is represented by a key whose value holds a tick object.<br/>
+        A tick object has the following properties :
+        <table class="api_table">
+          <tr><td><b>key</b></td><td><b>value</b></td><td><b>unit</b></td></tr>
+          <tr><td>last</td><td>price of the latest trade</td><td>currency/BTC</td></tr>
+          <tr><td>open</td><td>price of the first trade of the past 24h</td><td>currency/BTC</td></tr>
+          <tr><td>avg</td><td>average price during the past 24h</td><td>currency/BTC</td></tr>
+          <tr><td>bid</td><td>order book highest bid price</td><td>currency/BTC</td></tr>
+          <tr><td>ask</td><td>order book lowest ask price</td><td>currency/BTC</td></tr>
+          <tr><td>volume</td><td>trading volume (past 24h)</td><td>Bitcoins</td></tr>
+          <tr><td>rusd</td><td>currency to USD conversion rate</td><td>n/a</td></tr>
+        </table>
+      </div>
+      <br/>
+      <h3>Bitcoin Network Info</h3>
+      <div style="margin-left:1em;">
+        URL : <a href="/api/network" target="_blank">http://coinorama.net/api/network</a><br/>
+        Recommended request rate : Two per minute<br/><br/>
+        Returns a JSON object where <i>"ticks"</i> holds the data of available crypto-currencies (currently Bitcoin only).<br/>
+        For each crypto-currency, an object holds the crypto-currency name and the tick data.<br/>
+        A tick object has the following properties :
+        <table class="api_table">
+          <tr><td><b>key</b></td><td><b>name</b></td><td><b>unit</b></td></tr>
+          <tr><td>last</td><td>last block ID</td><td>n/a</td></tr>
+          <tr><td>time</td><td>last block timestamp</td><td>UNIX timestamp UTC</td></tr>
+          <tr><td>diff</td><td>difficulty</td><td>n/a</td></tr>
+          <tr><td>hrate</td><td>hashrate estimate</td><td>MH/s</td></tr>
+        </table>
+      </div>
+      <br/>
+    </div>
+  </div>
+
+  <div class="win" id="message">
+    <div class="winbar" id="winbar_message">
+      <span class="winbar_title" id="winmsg_title">Coinorama</span><span class="winbar_ctrl"><a id="ct_message" class="winctrl" href="#">x</a></span><br />
+    </div><br />
+    <div style="margin-left:2.5%; margin-right:2.5%;" id="winmsg_ctnt">
+    </div>
+    <div class="winclosebtn"><a id="ct_message" class="winctrl" href="#">&nbsp;Close&nbsp;</a></div>
+  </div>
+
+  <div id="footer">
+    Copyright &copy; 2013-2016 Nicolas BENOIT ;
+    <a style="color:#777; font-size:90%" href="bitcoin:15At8pPhcoQySMmytGiANYLxFzr3vcKFRF">donations</a> ; coinorama.net{at}gmail.com
+  </div>
+
+</body>
+</html>

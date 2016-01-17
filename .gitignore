@@ -1,0 +1,11 @@
+
+bin
+data
+logs
+
+*.log
+*.o
+*.py[cod]
+
+src/markets/coinrefd/coinrefd
+src/network/chainrefd/chainrefd

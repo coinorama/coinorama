@@ -1,0 +1,79 @@
+#!/bin/bash
+#
+# Chainrefd configuration script
+#
+# This file is part of Coinorama <http://coinorama.net>
+#
+# Copyright (C) 2013-2016 Nicolas BENOIT
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+# usage function
+usage ( )
+{
+    echo ''
+    echo 'usage: configure [options]'
+    echo ''
+    echo 'configures chainrefd makefile before build'
+    echo ''
+    echo 'options:'
+    echo -e '\t-h\t--help\t\tshow this help message'
+    echo -e '\t-o\t--optimize\tenables optimization flags'
+    echo -e '\t-R\t--nopruning\tdisables views pruning'
+    echo -e '\t-p\t--profile\tenables profiling flags'
+    echo ''
+}
+
+# default
+OPTIMIZE=0
+NO_PRUNING=0
+PROFILE=0
+
+# read options
+args=`getopt -u -n configure -l help,optimize,nopruning,profile -o hpRo -- $*`
+
+if [ $? -ne 0 ]
+then
+    usage
+    exit -1
+fi
+
+eval set -- "$args"
+
+while true;
+do
+    case "$1" in
+        -o|--optimize) OPTIMIZE=1; shift;;
+        -p|--profile) PROFILE=1; shift;;
+        -R|--nopruning) NO_PRUNING=1; shift;;
+        -h|--help) usage; exit 0;;
+        --) shift; break;;
+    esac
+done
+
+# display config
+echo "chainrefd build configuration"
+echo " optimize:   $OPTIMIZE"
+echo " no pruning: $NO_PRUNING"
+echo " profiling:  $PROFILE"
+
+# apply settings
+cat > Makefile.conf <<EOF
+# CHAINREF Makefile configuration
+
+OPTIMIZE=$OPTIMIZE
+NO_PRUNING=$NO_PRUNING
+PROFILE=$PROFILE
+EOF
