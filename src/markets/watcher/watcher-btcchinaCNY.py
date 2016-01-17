@@ -32,6 +32,7 @@ class BTCChinaCNYWatcher (coinwatcher.CoinWatcher):
     def __init__ ( self, shortname, with_coinrefd, logger ):
         coinwatcher.CoinWatcher.__init__ ( self, shortname, with_coinrefd, logger )
         self.mostRecentTransactionID = 0
+        self.mostRecentTransaction = int ( time.time() - 1 )
         self.mostRecentPrice = 0
         self.CNY_USD_rate = 1 / 6.0606
         self.CNY_USD_stamp = 0
@@ -40,16 +41,19 @@ class BTCChinaCNYWatcher (coinwatcher.CoinWatcher):
         ed = coinwatcher.ExchangeData ( )
 
         mostRecent = self.mostRecentTransactionID
+        mostRecentDate = self.mostRecentTransaction
         mostRecentPrice = self.mostRecentPrice
         try:
             for t in trades:
                 tid = int ( t['tid'] )
                 tvol = float ( t['amount'] )
+                tdate = int ( t['date'] )
                 if ( ( tid > self.mostRecentTransactionID ) and ( t['date'] > self.epoch ) ):
                     ed.volume += tvol
                     ed.nb_trades += 1
                 if ( tid > mostRecent ):
                     mostRecent = tid
+                    mostRecentDate = tdate
                     mostRecentPrice = float ( t['price'] )
         except Exception:
             self.logger.write ( 'error: buildData() failed with trades\n' + str(traceback.format_exc()) )
@@ -84,6 +88,7 @@ class BTCChinaCNYWatcher (coinwatcher.CoinWatcher):
                 self.mostRecentPrice = ed.bids[0][0]
             if ( mostRecent != 0 ):
                 self.mostRecentTransactionID = mostRecent
+                self.mostRecentTransaction = mostRecentDate
             ed.rate = self.mostRecentPrice
             ed.lag = lag
             ed.ask_value = ed.asks[0][0]
@@ -116,7 +121,8 @@ class BTCChinaCNYWatcher (coinwatcher.CoinWatcher):
                 self.logger.write ( 'error: unable to get USD/CNY\n' + str(traceback.format_exc()) )
                 pass
 
-        ed = coinwatcher.CoinWatcher.fetchData ( self, httplib.HTTPSConnection, 'data.btcchina.com', '/data/orderbook', '/data/historydata' )
+        trades = '/data/historydata?since=%d&sincetype=time' % self.mostRecentTransaction
+        ed = coinwatcher.CoinWatcher.fetchData ( self, httplib.HTTPSConnection, 'data.btcchina.com', '/data/orderbook', trades )
         return ed
 
 
