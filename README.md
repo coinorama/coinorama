@@ -66,6 +66,10 @@ $ ./bin/coinorama coinrefd start
 Before starting the collection of blockchain data, update the *bin/watcher-blockchain.py* file with the RPC password configured for your Bitcoind.
 Please note that you will also need to enable Bitcoind txindex to have accurate TX data.
 
+You may download an initial data file from : http://coinorama.net/blockchain.csv.gz
+
+Uncompress it and rename/move it as *data/blockchain/data.csv*
+
 To start collecting blockchain data :
 ```sh
 $ ./bin/coinorama watcher blockchain start
@@ -74,9 +78,7 @@ $ ./bin/coinorama watcher blockchain start
 When the initial dataset is empty, it may require many hours of processing before actually reaching the current block.
 In addition, the hashrate estimation may be broken given that timestamp of past blocks is not properly set.
 
-An up-to-date data file will be released soon so that you can skip this initialization step.
-
-Once you have collected a few minutes of data, you may start the network/blockchain database service :
+Once you're ready, you may start the network/blockchain database service :
 ```sh
 $ ./bin/coinorama chainrefd start
 ```
