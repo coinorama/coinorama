@@ -3,10 +3,10 @@ Coinorama
 
 What is Coinorama ?
 -------------------
-Coinorama is an independant, free-of-charge monitor of Bitcoin markets, network and blockchain.
-It's been active since May 2013 and released under GNU Affero GPL v3 in 2016.
+Coinorama is a monitoring framework for Bitcoin markets, network and blockchain.
+It's been active since May 2013 as Coinorama.net and released under GNU Affero GPL v3 in 2016.
 
-The monitoring framework includes : data collection tools, database for timeseries and a web frontend.
+The framework includes : data collection tools, database for timeseries and a web frontend.
 
 
 License
