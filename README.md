@@ -45,7 +45,7 @@ The framework can be managed using a single script : *bin/coinorama*
 
 Have a look at this script (or call it without any argument) to get its syntax.
 
-Most settings are located in 'conf/coinorama.conf'.
+Most settings are located in [conf/coinorama.conf](conf/coinorama.conf).
 Check out this file and fill in the markets you would like to monitor.
 Check-out the content of [src/markets/watcher/](src/markets/watcher/) to find out which markets have a watcher.
 
