@@ -58,7 +58,7 @@ $ ./bin/coinorama watcher bitstampUSD status # check watcher status
 $ ./bin/coinorama watcher bitstampUSD stop   # stop collecting data
 ```
 
-You may also use the **markets** keyword to process all markets declared in the configuration file : 
+You may also use the *markets* keyword to process all markets declared in the configuration file : 
 ```sh
 $ ./bin/coinorama watcher markets start     # start collecting data for all markets
 ```
