@@ -52,9 +52,15 @@ Check-out the content of [src/markets/watcher/](src/markets/watcher/) to find ou
 ### Markets
 To start collecting market data (for example bitstamp USD market) :
 ```sh
-$ ./bin/coinorama watcher bitstampUSD start # start collecting data
-$ ./bin/coinorama watcher bitstampUSD log   # inspect log
-$ ./bin/coinorama watcher bitstampUSD stop  # stop collecting data
+$ ./bin/coinorama watcher bitstampUSD start  # start collecting data
+$ ./bin/coinorama watcher bitstampUSD log    # inspect log
+$ ./bin/coinorama watcher bitstampUSD status # check watcher status
+$ ./bin/coinorama watcher bitstampUSD stop   # stop collecting data
+```
+
+You may also use the **markets** keyword to process all markets declared in the configuration file : 
+```sh
+$ ./bin/coinorama watcher markets start     # start collecting data for all markets
 ```
 
 Once you have collected a few minutes of data, you may start the markets database service :
@@ -66,7 +72,7 @@ $ ./bin/coinorama coinrefd start
 Before starting the collection of blockchain data, update the *bin/watcher-blockchain.py* file with the RPC password configured for your Bitcoind.
 Please note that you will also need to enable Bitcoind txindex to have accurate TX data.
 
-You may download an initial data file from : http://coinorama.net/blockchain.csv.gz
+You may download an initial data file from : http://nbenoit.tuxfamily.org/projects/coinorama/blockchain.csv.gz
 
 Uncompress it and rename/move it as *data/blockchain/data.csv*
 
