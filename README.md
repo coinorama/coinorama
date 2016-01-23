@@ -63,6 +63,8 @@ You may also use the *markets* keyword to process all markets declared in the co
 $ ./bin/coinorama watcher markets start     # start collecting data for all markets
 ```
 
+If you're looking for Coinorama.net's historical data, get it from : http://openair.free.fr/coinorama-20160119/
+
 Once you have collected a few minutes of data, you may start the markets database service :
 ```sh
 $ ./bin/coinorama coinrefd start
