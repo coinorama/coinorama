@@ -40,7 +40,33 @@ import signal
 rpcuser = 'bitcoinrpc'
 rpcpass = '' # FILL IN THIS FIELD WITH THE RPC PASSWORD YOUR BITCOIND IS CONFIGURED WITH
 
-access = authproxy.AuthServiceProxy ( 'http://' + rpcuser + ':' + rpcpass + '@localhost:8332' )
+
+# Bitcoind RPC access class
+class BitcoinRPC:
+    def __init__ ( self, logger, max_attempts=2 ):
+        self.access = authproxy.AuthServiceProxy ( 'http://' + rpcuser + ':' + rpcpass + '@localhost:8332' )
+        self.logger = logger
+        self.max_attempts = max_attempts
+        return
+
+    def call ( self, method, *args ):
+        attempt = 0
+        while ( ( self.max_attempts == 0 ) or ( attempt < self.max_attempts ) ):
+            try:
+                return self.access.__getattr__(method) ( *args )
+            except Exception as e:
+                self.logger.write ( 'error BitcoinRPC %s' % e )
+            self.access = None
+            while ( self.access == None ):
+                time.sleep ( 5 ) # wait some time and create a new connection
+                try:
+                    self.access = authproxy.AuthServiceProxy ( 'http://' + rpcuser + ':' + rpcpass + '@localhost:8332' )
+                except Exception as e:
+                    self.logger.write ( 'error BitcoinRPC %s' % e )
+                    self.access = None
+            attempt += 1
+        raise Exception ( 'BitcoinRPC keeps failing' )
+        return None
 
 
 # Timer class
@@ -69,7 +95,7 @@ class Timer:
 
 # BlockData class
 class BlockData:
-    def __init__ ( self, block, timestamp, logger ):
+    def __init__ ( self, block, timestamp, btcrpc, logger ):
         self.timestamp = timestamp
         self.uid = block['height']
         self.difficulty = block['difficulty']
@@ -78,6 +104,7 @@ class BlockData:
         self.nb_tx = len(block['tx'])
         self.volume = 0
         self.fees = 0
+        self.btcrpc = btcrpc
         self.logger = logger
         self.computeFees ( block )
         self.computeVolume ( block )
@@ -89,8 +116,8 @@ class BlockData:
     def computeFees ( self, block ):
         self.fees = 0
         try:
-            rawt = access.getrawtransaction ( block['tx'][0] )
-            tx = access.decoderawtransaction ( rawt )
+            rawt = self.btcrpc.call ( 'getrawtransaction', block['tx'][0] )
+            tx = self.btcrpc.call ( 'decoderawtransaction', rawt )
             for txout in tx['vout']:
                 self.fees += txout['value']
             self.fees = self.fees - self.getBlockReward()
@@ -105,8 +132,8 @@ class BlockData:
         self.volume = 0
         try:
             for t in block['tx']:
-                rawt = access.getrawtransaction ( t )
-                tx = access.decoderawtransaction ( rawt )
+                rawt = self.btcrpc.call ( 'getrawtransaction', t )
+                tx = self.btcrpc.call ( 'decoderawtransaction', rawt )
                 for txout in tx['vout']:
                     self.volume += txout['value']
         except Exception as e:
@@ -126,10 +153,15 @@ class BlockchainWatcher:
         data_fname = 'data/blockchain/data.csv'
         self.csv_file = io.open ( data_fname, 'ab', 256 )
         self.timer = Timer ( 10, self )
+        try:
+            self.btcrpc = BitcoinRPC ( self.logger, 0 ) # will keep retrying forever if connection to bitcoind is lost
+        except:
+            self.logger.write ( 'error bitcoind not responding' )
+            raise Exception ( 'cannot initialize RPC with bitcoind' )
         if not self.readPrevData ( data_fname ):
             try:
-                self.mostRecentBlock = access.getblockcount ( )
-                self.maxMempoolSize = access.getmempoolinfo()['size']
+                self.mostRecentBlock = self.btcrpc.call ( 'getblockcount' )
+                self.maxMempoolSize = self.btcrpc.call ( 'getmempoolinfo' ) ['size']
             except:
                 self.logger.write ( 'error bitcoind not responding' )
                 raise Exception ( 'cannot contact bitcoind' )
@@ -163,15 +195,15 @@ class BlockchainWatcher:
         b = None
         bd = None
         try:
-            mempool = access.getmempoolinfo ( )
+            mempool = self.btcrpc.call ( 'getmempoolinfo' )
             self.maxMempoolSize = max ( self.maxMempoolSize, mempool['size'] )
             timestamp = time.time ( )
-            last_block_uid = access.getblockcount ( )
+            last_block_uid = self.btcrpc.call ( 'getblockcount' )
             if last_block_uid > self.mostRecentBlock:
                 for n in range(self.mostRecentBlock+1,last_block_uid+1):
-                    blockhash = access.getblockhash ( n )
-                    block = access.getblock ( blockhash )
-                    bd = BlockData ( block, timestamp, self.logger )
+                    blockhash = self.btcrpc.call ( 'getblockhash', n )
+                    block = self.btcrpc.call ( 'getblock', blockhash )
+                    bd = BlockData ( block, timestamp, self.btcrpc, self.logger )
                     self.dispatchData ( bd, mempool['size'] )
                     self.maxMempoolSize = mempool['size']
                     timestamp = timestamp + 4
