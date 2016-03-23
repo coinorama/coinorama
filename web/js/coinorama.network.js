@@ -148,7 +148,7 @@ $( function() {
         if ( val < 1000 )
             return val.toFixed(0)+' P';
         else
-            return (val/1000).toFixed(0)+' E';
+            return (val/1000).toFixed(1)+' E';
         
     }
 
