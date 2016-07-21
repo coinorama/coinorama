@@ -44,30 +44,31 @@ class KrakenLTCWatcher (coinwatcher.CoinWatcher) :
         mostRecent = 0
         mostRecentPrice = self.mostRecentPrice
         try:
-            for t in trades['result']['XXBTXLTC']:
-                tvol = float ( t[1] )
+            for t in trades['result']['XLTCXXBT']:
+                tprice = float ( t[0] )
+                tvol = tprice * float ( t[1] ) # amount is LTC, convert to BTC using price
                 tdate = float ( t[2] )
                 if ( ( tdate > self.mostRecentTransaction ) and ( tdate > self.epoch ) ):
                     ed.volume += tvol
                     ed.nb_trades += 1
                 if ( tdate > mostRecent ):
                     mostRecent = tdate
-                    mostRecentPrice = float ( t[0] )
+                    mostRecentPrice = 1 / tprice # trade pair must be inverted ltcbtc -> btcltc
         except Exception:
             self.logger.write ( 'error buildData trades\n' + str(traceback.format_exc()) )
             return None
 
-        try:
-            for b in book['result']['XXBTXLTC']['bids']:
-                bprice = float ( b[0] )
-                bvol = float ( b[1] )
+        try: # bids and asks are inverted
+            for b in book['result']['XLTCXXBT']['asks']:
+                bprice = 1 / float ( b[0] ) # trade pair must be inverted ltcbtc -> btcltc
+                bvol = float ( b[0] ) * float ( b[1] )
                 ed.bids.append ( [ bprice, bvol ] )
                 ed.total_bid += bprice * bvol
             ed.bids.sort ( reverse=True )
 
-            for a in book['result']['XXBTXLTC']['asks']:
-                aprice = float ( a[0] )
-                avol = float ( a[1] )
+            for a in book['result']['XLTCXXBT']['bids']:
+                aprice = 1 / float ( a[0] ) # trade pair must be inverted ltcbtc -> btcltc
+                avol = float ( a[0] ) * float ( a[1] )
                 ed.asks.append ( [ aprice, avol ] )
                 ed.total_ask += avol
             ed.asks.sort ( )
@@ -115,8 +116,8 @@ class KrakenLTCWatcher (coinwatcher.CoinWatcher) :
                 self.logger.write ( 'error LTC_USD\n' + str(traceback.format_exc()) )
                 pass
 
-        trades = '/0/public/Trades?pair=XXBTXLTC&since=%s' % self.mostRecentTransactionID
-        ed = coinwatcher.CoinWatcher.fetchData ( self, httplib.HTTPSConnection, 'api.kraken.com', '/0/public/Depth?pair=XXBTXLTC', trades )
+        trades = '/0/public/Trades?pair=XLTCXXBT&since=%s' % self.mostRecentTransactionID
+        ed = coinwatcher.CoinWatcher.fetchData ( self, httplib.HTTPSConnection, 'api.kraken.com', '/0/public/Depth?pair=XLTCXXBT', trades )
         return ed
 
 
