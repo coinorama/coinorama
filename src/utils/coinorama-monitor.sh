@@ -201,7 +201,7 @@ function exchange_status
 
     price_padlength=14
     coinwatch_str=""
-    lastline=$(/usr/bin/tac watcher-$1.log | /bin/grep -m 1 "$year")
+    lastline=$(/usr/bin/tac watcher-$1.log | /bin/grep -m 1 "^$year")
     lasttick=$(/usr/bin/tac watcher-$1.log | /bin/grep -m 1 "tick ")
     stamp=$(echo "$lasttick" | /usr/bin/awk '{{print $1,$2}}')
     if echo "$lastline" | /bin/grep -q "tick "
