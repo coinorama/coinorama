@@ -47,12 +47,15 @@ class CoinbaseGBPWatcher (coinwatcher.CoinWatcher) :
         mostRecentID = self.mostRecentTransactionID
         mostRecentDate = 0
         mostRecentPrice = self.mostRecentPrice
+        tzoffset = time.timezone
+        if time.daylight:
+            tzoffset = time.altzone
         try:
             for t in trades:
                 tid = int ( t['trade_id'] )
                 tvol = float ( t['size'] )
                 d = datetime.datetime.strptime ( t['time'], '%Y-%m-%dT%H:%M:%S.%fZ' )
-                tdate = float ( d.strftime('%s') ) - time.timezone
+                tdate = float ( d.strftime('%s') ) - tzoffset
                 if ( ( tid > self.mostRecentTransactionID ) and ( tdate > self.epoch ) ):
                     ed.volume += tvol
                     ed.nb_trades += 1

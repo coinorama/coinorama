@@ -39,12 +39,15 @@ class ItBitUSDWatcher (coinwatcher.CoinWatcher) :
 
         mostRecent = self.mostRecentTransactionID
         mostRecentPrice = self.mostRecentPrice
+        tzoffset = time.timezone
+        if time.daylight:
+            tzoffset = time.altzone
         try:
             for t in trades['recentTrades']:
                 tid = int ( t['matchNumber'] )
                 tvol = float ( t['amount'] )
                 d = datetime.datetime.strptime ( t['timestamp'][:-2], '%Y-%m-%dT%H:%M:%S.%f' )
-                tdate = float ( d.strftime('%s') ) - time.timezone
+                tdate = float ( d.strftime('%s') ) - tzoffset
                 if ( ( tid > self.mostRecentTransactionID ) and ( tdate > self.epoch ) ):
                     ed.volume += tvol
                     ed.nb_trades += 1
