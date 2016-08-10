@@ -23,6 +23,7 @@
 
 import time
 import traceback
+import datetime
 import httplib
 import coinwatcher
 
@@ -41,11 +42,19 @@ class BitfinexUSDWatcher (coinwatcher.CoinWatcher) :
         mostRecentID = self.mostRecentTransactionID
         mostRecentDate = 0
         mostRecentPrice = self.mostRecentPrice
+        tzoffset = time.timezone
+        if time.daylight:
+            tzoffset = time.altzone
         try:
             for t in trades:
-                tid = int ( t['tid'] )
+                # 2016-08-10: tid key disappeared from API
+                # tid = int ( t['tid'] )
+                tid = int ( t['id'] )
                 tvol = float ( t['amount'] )
-                tdate = float ( t['timestamp'] )
+                # 2016-08-10: timestamp key disappeared from API
+                # tdate = float ( t['timestamp'] )
+                d = datetime.datetime.strptime ( t['created_at'], '%Y-%m-%dT%H:%M:%SZ' )
+                tdate = float ( d.strftime('%s') ) - tzoffset
                 if ( ( tid > self.mostRecentTransactionID ) and ( tdate > self.epoch ) ):
                     ed.volume += tvol
                     ed.nb_trades += 1
@@ -94,7 +103,8 @@ class BitfinexUSDWatcher (coinwatcher.CoinWatcher) :
         return ed
 
     def fetchData ( self ):
-        trades = '/v1/trades/btcusd?timestamp=%d' %  int ( self.mostRecentTransaction )
+        # 2016-08-10: timestamp parameter disappeared from API
+        trades = '/v1/trades/btcusd' # '?timestamp=%d' %  int ( self.mostRecentTransaction )
         ed = coinwatcher.CoinWatcher.fetchData ( self, httplib.HTTPSConnection, 'api.bitfinex.com', '/v1/book/btcusd', trades )
         return ed
 
