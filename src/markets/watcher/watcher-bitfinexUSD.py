@@ -42,19 +42,20 @@ class BitfinexUSDWatcher (coinwatcher.CoinWatcher) :
         mostRecentID = self.mostRecentTransactionID
         mostRecentDate = 0
         mostRecentPrice = self.mostRecentPrice
+        # 2016-08-10: tzoffset is used when timestamp key is not available
         tzoffset = time.timezone
         if time.daylight:
             tzoffset = time.altzone
         try:
             for t in trades:
                 # 2016-08-10: tid key disappeared from API
-                # tid = int ( t['tid'] )
-                tid = int ( t['id'] )
+                tid = int ( t['tid'] )
+                #tid = int ( t['id'] )
                 tvol = float ( t['amount'] )
                 # 2016-08-10: timestamp key disappeared from API
-                # tdate = float ( t['timestamp'] )
-                d = datetime.datetime.strptime ( t['created_at'], '%Y-%m-%dT%H:%M:%SZ' )
-                tdate = float ( d.strftime('%s') ) - tzoffset
+                tdate = float ( t['timestamp'] )
+                #d = datetime.datetime.strptime ( t['created_at'], '%Y-%m-%dT%H:%M:%SZ' )
+                #tdate = float ( d.strftime('%s') ) - tzoffset
                 if ( ( tid > self.mostRecentTransactionID ) and ( tdate > self.epoch ) ):
                     ed.volume += tvol
                     ed.nb_trades += 1
@@ -103,8 +104,7 @@ class BitfinexUSDWatcher (coinwatcher.CoinWatcher) :
         return ed
 
     def fetchData ( self ):
-        # 2016-08-10: timestamp parameter disappeared from API
-        trades = '/v1/trades/btcusd' # '?timestamp=%d' %  int ( self.mostRecentTransaction )
+        trades = '/v1/trades/btcusd?timestamp=%d' %  int ( self.mostRecentTransaction )
         ed = coinwatcher.CoinWatcher.fetchData ( self, httplib.HTTPSConnection, 'api.bitfinex.com', '/v1/book/btcusd', trades )
         return ed
 
