@@ -54,7 +54,10 @@ class CoinbaseGBPWatcher (coinwatcher.CoinWatcher) :
             for t in trades:
                 tid = int ( t['trade_id'] )
                 tvol = float ( t['size'] )
-                d = datetime.datetime.strptime ( t['time'], '%Y-%m-%dT%H:%M:%S.%fZ' )
+                try:
+                    d = datetime.datetime.strptime ( t['time'], '%Y-%m-%dT%H:%M:%S.%fZ' )
+                except:
+                    d = datetime.datetime.strptime ( t['time'], '%Y-%m-%dT%H:%M:%SZ' )
                 tdate = float ( d.strftime('%s') ) - tzoffset
                 if ( ( tid > self.mostRecentTransactionID ) and ( tdate > self.epoch ) ):
                     ed.volume += tvol
