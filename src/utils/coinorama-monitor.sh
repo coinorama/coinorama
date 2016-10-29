@@ -206,8 +206,8 @@ function exchange_status
     stamp=$(echo "$lasttick" | /usr/bin/awk '{{print $1,$2}}')
     if echo "$lastline" | /bin/grep -q "tick "
     then
-        bid=$(printf %.1f $(echo "$lastline" | /usr/bin/awk '{{print $4}}'))
-        ask=$(printf %.1f $(echo "$lastline" | /usr/bin/awk '{{print $5}}'))
+        bid=$(printf %.2f $(echo "$lastline" | /usr/bin/awk '{{print $4}}'))
+        ask=$(printf %.2f $(echo "$lastline" | /usr/bin/awk '{{print $5}}'))
         s=$(echo -e "$1 $(printf '%*.*s' 0 $((price_padlength - ${#1})) "$pad") $bid")
         t=$(echo -e "$(printf '%*.*s' 0 $((10 - ${#bid})) "$pad") $ask")
         coinwatch_str="$s$t"
