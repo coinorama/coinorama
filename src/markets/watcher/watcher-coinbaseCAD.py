@@ -141,7 +141,7 @@ class CoinbaseCADWatcher (coinwatcher.CoinWatcher) :
         #    book = '/products/BTC-CAD/book?level=3'
         #    self.book_stamp = time.time ( )
         book = '/products/BTC-CAD/book?level=3'
-        ed = coinwatcher.CoinWatcher.fetchData ( self, httplib.HTTPSConnection, 'api.exchange.coinbase.com', book, trades )
+        ed = coinwatcher.CoinWatcher.fetchData ( self, httplib.HTTPSConnection, 'api.gdax.com', book, trades )
         return ed
 
 
