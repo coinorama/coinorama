@@ -46,10 +46,10 @@ class GeminiUSDWatcher (coinwatcher.CoinWatcher) :
                 tid = int ( t['tid'] )
                 tvol = float ( t['amount'] )
                 tdate = int ( t['timestamp'] )
-                if ( ( tid > self.mostRecentTransactionID ) and ( tdate > self.epoch ) ):
+                if ( ( tdate > self.mostRecentTransaction ) and ( tdate > self.epoch ) ):
                     ed.volume += tvol
                     ed.nb_trades += 1
-                if ( tid > mostRecentID ):
+                if ( tdate > mostRecentDate ):
                     mostRecentID = tid
                     mostRecentDate = tdate
                     mostRecentPrice = float ( t['price'] )
