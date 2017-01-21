@@ -3,7 +3,7 @@
  *
  * This file is distributed as part of Coinorama
  *
- * Copyright (c) 2013-2016 Nicolas BENOIT
+ * Copyright (c) 2013-2017 Nicolas BENOIT
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -71,6 +71,7 @@ typedef enum view_length_id_en
     VIEW_LENGTH_6_M,
     VIEW_LENGTH_1_Y,
     VIEW_LENGTH_2_Y,
+    VIEW_LENGTH_4_Y,
     NB_VIEW_LENGTHS
   } view_length_id;
 

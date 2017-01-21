@@ -5,7 +5,7 @@
  *
  * This file is distributed as part of Coinorama
  *
- * Copyright (c) 2013-2016 Nicolas BENOIT
+ * Copyright (c) 2013-2017 Nicolas BENOIT
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -213,6 +213,10 @@ view_length_lookup ( const gchar *name )
 
       case 'z':
         lid = VIEW_LENGTH_2_Y;
+        break;
+
+      case 'f':
+        lid = VIEW_LENGTH_4_Y;
         break;
 
       default:

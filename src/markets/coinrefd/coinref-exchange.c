@@ -5,7 +5,7 @@
  *
  * This file is distributed as part of Coinorama
  *
- * Copyright (c) 2013-2016 Nicolas BENOIT
+ * Copyright (c) 2013-2017 Nicolas BENOIT
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
@@ -124,6 +124,7 @@ exchange_new ( const guint uid,
   e->views[VIEW_LENGTH_6_M] = refview_new ( e->store, 'b', "6m", 3600*24*183, "1d", 3600*24 );
   e->views[VIEW_LENGTH_1_Y] = refview_new ( e->store, 'y', "1y", 3600*24*365, "2d", 3600*24*2 );
   e->views[VIEW_LENGTH_2_Y] = refview_new ( e->store, 'z', "2y", 3600*24*365*2, "4d", 3600*24*4 );
+  e->views[VIEW_LENGTH_4_Y] = refview_new ( e->store, 'f', "4y", 3600*24*365*4, "1w", 3600*24*7 );
 
 #ifdef _WITH_STORE_GZIP_PACKS
   error = refstore_read_from_filez ( e->store );
