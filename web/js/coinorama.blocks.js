@@ -37,14 +37,14 @@ $( function() {
 
     function prettySizeUnit ( s )
     {
-        if ( s < 1024 )
+        if ( s < 1000 )
             return s.toString() + ' bytes';
-        else if ( s < 1024*1024 )
-            return (s/1024.0).toFixed(2) + ' KB';
-        else if ( s < 1024*1024*1024 )
-            return (s/(1024.0*1024.0)).toFixed(2) + ' MB';
+        else if ( s < 1000*1000 )
+            return (s/1000.0).toFixed(2) + ' KB';
+        else if ( s < 1000*1000*1000 )
+            return (s/(1000.0*1000.0)).toFixed(2) + ' MB';
         else
-            return (s/(1024.0*1024.0*1024.0)).toFixed(2) + ' GB';
+            return (s/(1000.0*1000.0*1000.0)).toFixed(2) + ' GB';
     }
 
     /* may not be 100% accurate (float instead of Big decimal) */

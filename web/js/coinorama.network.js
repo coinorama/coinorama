@@ -1726,7 +1726,7 @@ $( function() {
                 this.chart_options = jQuery.extend ( true, {}, common_lines_options );
                 this.chart_options.xaxis.timeformat = this.getTimeFormat ( );
                 this.chart_options.tooltipOpts.content = '~%yb<br/> %x';
-                this.chart_options.yaxis.tickFormatter = formatTickByte;
+                this.chart_options.yaxis.tickFormatter = formatTickUnit;
                 this.chart_options.legend.noColumns = 3;
                 super_update.call ( this, replot );
             };
@@ -2011,7 +2011,7 @@ $( function() {
                 this.chart_options = jQuery.extend ( true, {}, common_lines_options );
                 this.chart_options.xaxis.timeformat = this.getTimeFormat ( );
                 this.chart_options.tooltipOpts.content = '%ybytes<br/> %x';
-                this.chart_options.yaxis.tickFormatter = formatTickByte;
+                this.chart_options.yaxis.tickFormatter = formatTickUnit;
 
                 this.txsize = [ ];
                 this.txsize_ema26 = [ ];
