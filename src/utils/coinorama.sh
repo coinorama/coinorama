@@ -305,7 +305,7 @@ then
         fi
     done
 
-    for e in $EXCHANGES_OFF
+    for e in $EXCHANGES_OFF markets_off
     do
         if [ "$2" = $e ]
         then
@@ -325,6 +325,12 @@ then
     if [ "$watcher" = "markets" ]
     then
         for watcher in $EXCHANGES
+        do
+            perform_action_on "watcher" "$3" "$watcher" "$extra"
+        done
+    elif [ "$watcher" = "markets_off" ]
+    then
+        for watcher in $EXCHANGES_OFF
         do
             perform_action_on "watcher" "$3" "$watcher" "$extra"
         done
