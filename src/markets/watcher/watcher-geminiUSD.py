@@ -31,7 +31,7 @@ import coinwatcher
 class GeminiUSDWatcher (coinwatcher.CoinWatcher) :
     def __init__ ( self, shortname, with_coinrefd, logger ):
         coinwatcher.CoinWatcher.__init__ ( self, shortname, with_coinrefd, logger )
-        self.mostRecentTransaction = int ( time.time() - 1 )
+        self.mostRecentTransaction = int ( time.time() - 1 ) * 1000
         self.mostRecentTransactionID = 0
         self.mostRecentPrice = 0
 
@@ -45,7 +45,7 @@ class GeminiUSDWatcher (coinwatcher.CoinWatcher) :
             for t in trades:
                 tid = int ( t['tid'] )
                 tvol = float ( t['amount'] )
-                tdate = int ( t['timestamp'] )
+                tdate = int ( t['timestampms'] )
                 if ( ( tdate > self.mostRecentTransaction ) and ( tdate > self.epoch ) ):
                     ed.volume += tvol
                     ed.nb_trades += 1
@@ -94,7 +94,8 @@ class GeminiUSDWatcher (coinwatcher.CoinWatcher) :
         return ed
 
     def fetchData ( self ):
-        trades = '/v1/trades/BTCUSD?since=%d' % self.mostRecentTransaction
+        #trades = '/v1/trades/BTCUSD?since=%d' % self.mostRecentTransaction
+        trades = '/v1/trades/BTCUSD'
         ed = coinwatcher.CoinWatcher.fetchData ( self, httplib.HTTPSConnection, 'api.gemini.com', '/v1/book/BTCUSD', trades )
         return ed
 
