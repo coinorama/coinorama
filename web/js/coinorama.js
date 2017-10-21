@@ -212,8 +212,10 @@ function formatTickHashrate ( val )
         return (val/1000).toFixed(2)+' Ghash/s';
     else if ( val < 1000000000 )
         return (val/1000000).toFixed(2)+' Thash/s';
-    else
+    else if ( val < 1000000000000 )
         return (val/1000000000).toFixed(2)+' Phash/s';
+    else
+        return (val/1000000000000).toFixed(2)+' Ehash/s';
 }
 
 function formatTitleHashrate ( val )
@@ -224,8 +226,10 @@ function formatTitleHashrate ( val )
         return (val/1000).toFixed(2)+' Gh/s';
     else if ( val < 1000000000 )
         return (val/1000000).toFixed(2)+' Th/s';
-    else
+    else if ( val < 1000000000000 )
         return (val/1000000000).toFixed(2)+' Ph/s';
+    else
+        return (val/1000000000000).toFixed(2)+' Eh/s';
 }
 
 
