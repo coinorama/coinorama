@@ -4,7 +4,7 @@
 #
 # This file is part of Coinorama <http://coinorama.net>
 #
-# Copyright (C) 2013-2016 Nicolas BENOIT
+# Copyright (C) 2013-2017 Nicolas BENOIT
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
@@ -34,7 +34,7 @@ class KrakenEURWatcher (coinwatcher.CoinWatcher) :
         self.mostRecentTransactionID = "%.0f" % ((time.time() - 1) * 1000000000)
         self.mostRecentTransaction = 0
         self.mostRecentPrice = 0
-        self.EUR_USD_rate = 1.3695
+        self.EUR_USD_rate = 1.1645
         self.EUR_USD_stamp = 0
 
     def buildData ( self, book, trades, lag ):
@@ -95,23 +95,10 @@ class KrakenEURWatcher (coinwatcher.CoinWatcher) :
 
     def fetchData ( self ):
         if ( (time.time()-self.EUR_USD_stamp) > 3600.0 ): # get USD/EUR rate every hour
-            try:
-                connection = httplib.HTTPConnection ( 'download.finance.yahoo.com', timeout=5 )
-                connection.request ( 'GET', '/d/quotes.csv?s=EURUSD=X&f=sl1&e=.csv' )
-                r = connection.getresponse ( )
-                if ( r.status == 200 ):
-                    rate_txt = r.read ( )
-                    rate = float ( rate_txt.split(',')[1] )
-                    if ( rate > 0 ):
-                        self.EUR_USD_rate = rate
-                        self.EUR_USD_stamp = time.time ( )
-                        #self.logger.write ( 'rate: %f ' % self.EUR_USD_rate )
-                else:
-                    self.logger.write ( 'error EUR_USD http %d' % r.status )
-                connection.close ( )
-            except Exception:
-                self.logger.write ( 'error EUR_USD\n' + str(traceback.format_exc()) )
-                pass
+            rate = self.fetchFixUSD ( 'EUR' )
+            if ( rate > 0 ):
+                self.EUR_USD_rate = rate
+                self.EUR_USD_stamp = time.time ( )
 
         trades = '/0/public/Trades?pair=XXBTZEUR&since=%s' % self.mostRecentTransactionID
         ed = coinwatcher.CoinWatcher.fetchData ( self, httplib.HTTPSConnection, 'api.kraken.com', '/0/public/Depth?pair=XXBTZEUR', trades )
