@@ -4,7 +4,7 @@
 #
 # This file is part of Coinorama <http://coinorama.net>
 #
-# Copyright (C) 2013-2016 Nicolas BENOIT
+# Copyright (C) 2013-2017 Nicolas BENOIT
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as published by
@@ -27,6 +27,7 @@ import math
 import os
 import io
 import socket
+import httplib
 import sys
 import time
 import json
@@ -287,6 +288,25 @@ class CoinWatcher:
             if ( ed != None ):
                 ed.timestamp = start
         return ed
+
+    # get currency conversion rate
+    def fetchFixUSD ( self, base ):
+        rate = 0.0
+        try:
+            connection = httplib.HTTPConnection ( 'api.fixer.io', timeout=5 )
+            connection.request ( 'GET', '/latest?symbols=USD&base=%s' % base )
+            r = connection.getresponse ( )
+            if ( r.status == 200 ):
+                rateDict = json.loads ( r.read() )
+                rate = float ( rateDict['rates']['USD'] )
+                #self.logger.write ( 'rate: %f ' % rate )
+            else:
+                self.logger.write ( 'error %s_USD http %d' % (base,r.status) )
+            connection.close ( )
+        except Exception:
+            self.logger.write ( ('error %s_USD\n'%base) + str(traceback.format_exc()) )
+            pass
+        return rate
 
     # notify Coinref through UNIX socket
     def notifyCoinref ( self, message ):
