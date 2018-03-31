@@ -211,7 +211,7 @@ function rotate_watcher
     echo "rotating $1 watcher"
     mv "$COINORAMA_LOG/watcher-$1.log" "$COINORAMA_LOG/watcher-$1.log.1"
     tail -n 8 "$COINORAMA_LOG/watcher-$1.log.1" > "$COINORAMA_LOG/watcher-$1.log"
-    start_watcher $1
+    start_watcher $1 $2
     xz --best "$COINORAMA_LOG/watcher-$1.log.1"
 }
 
@@ -238,7 +238,7 @@ function perform_action_on
             log_$1 $3
             ;;
         rotate)
-            rotate_$1 $3
+            rotate_$1 $3 $4
             ;;
         *)
             usage
